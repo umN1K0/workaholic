@@ -8,7 +8,7 @@ A menu-bar switch that keeps a MacBook awake with the lid closed, on battery, wi
 ./install.sh
 ```
 
-Needs the Xcode Command Line Tools (`xcode-select --install`). The script builds the app into `/Applications` and installs one sudoers rule:
+The script compiles the app with `swiftc` from Apple's Command Line Tools (no Xcode app needed; most Macs used for development already have them, otherwise run `xcode-select --install`), puts it in `/Applications`, and installs one sudoers rule:
 
 ```
 <you> ALL=(root) NOPASSWD: /usr/bin/pmset -a disablesleep 0, /usr/bin/pmset -a disablesleep 1
