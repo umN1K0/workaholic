@@ -1,5 +1,10 @@
 # Workaholic
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/screenshot-dark.png">
+  <img alt="Workaholic menu-bar panel: awake, auto-off in 1:47, battery 78% with a 20% floor" src="assets/screenshot-light.png">
+</picture>
+
 A menu-bar switch that keeps a MacBook awake with the lid closed, on battery, with no external display. One Swift file, no daemon, no dependencies. macOS 13+.
 
 ## Install

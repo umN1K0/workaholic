@@ -219,9 +219,7 @@ struct Panel: View {
             Spacer(minLength: 0)
 
             Toggle("Keep awake", isOn: Binding(get: { controller.awake }, set: { controller.setAwake($0) }))
-                .toggleStyle(.switch)
-                .labelsHidden()
-                .tint(.orange)
+                .toggleStyle(WarmSwitch())
         }
     }
 
@@ -284,6 +282,25 @@ struct Panel: View {
             .buttonStyle(.borderless)
             .help("Quit Workaholic and restore normal sleep")
         }
+    }
+}
+
+/// The system switch ignores `.tint` on macOS and greys out whenever the popover is not key.
+struct WarmSwitch: ToggleStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Button { configuration.isOn.toggle() } label: {
+            Capsule()
+                .fill(configuration.isOn ? AnyShapeStyle(warmGradient) : AnyShapeStyle(.quaternary))
+                .frame(width: 40, height: 24)
+                .overlay(alignment: configuration.isOn ? .trailing : .leading) {
+                    Circle()
+                        .fill(.white)
+                        .shadow(color: .black.opacity(0.25), radius: 1, y: 1)
+                        .padding(2)
+                }
+        }
+        .buttonStyle(.plain)
+        .accessibilityRepresentation { Toggle(isOn: configuration.$isOn) { configuration.label } }
     }
 }
 
