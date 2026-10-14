@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Builds Wakeful into /Applications and installs the one sudoers rule it needs.
+# Builds Workaholic into /Applications and installs the one sudoers rule it needs.
 set -euo pipefail
 cd "$(dirname "$0")"
 
-GRANT_FILE=/etc/sudoers.d/wakeful
+GRANT_FILE=/etc/sudoers.d/workaholic
 GRANT="$(id -un) ALL=(root) NOPASSWD: /usr/bin/pmset -a disablesleep 0, /usr/bin/pmset -a disablesleep 1"
 
-osascript -e 'quit app "Wakeful"' 2>/dev/null || true
+osascript -e 'quit app "Workaholic"' 2>/dev/null || true
 ./build.sh /Applications
 
 echo
@@ -25,5 +25,5 @@ sudo visudo -c >/dev/null
 sudo -k
 sudo -n -l /usr/bin/pmset -a disablesleep 1 >/dev/null || { echo "error: the rule is not active" >&2; exit 1; }
 
-open /Applications/Wakeful.app
+open /Applications/Workaholic.app
 echo "Done. Click the cup in the menu bar."
