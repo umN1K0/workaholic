@@ -3,8 +3,7 @@
 set -euo pipefail
 
 osascript -e 'quit app "Workaholic"' 2>/dev/null || true
-sudo /usr/bin/pmset -a disablesleep 0
-sudo rm -f /etc/sudoers.d/workaholic
+osascript -e 'do shell script "/usr/bin/pmset -a disablesleep 0 && /bin/rm -f /etc/sudoers.d/workaholic" with administrator privileges' >/dev/null
 rm -rf /Applications/Workaholic.app
 defaults delete com.umn1k0.workaholic 2>/dev/null || true
 

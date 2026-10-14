@@ -12,14 +12,14 @@ osascript -e 'quit app "Workaholic"' 2>/dev/null || true
 echo
 echo "Installing this rule at $GRANT_FILE (root:wheel, 0440):"
 echo "    $GRANT"
-echo "It allows only turning lid-close sleep off and on. sudo will ask for your password once."
+echo "It allows only turning lid-close sleep off and on. macOS will ask for your password once."
 
 TMP="$(mktemp)"
 trap 'rm -f "$TMP"' EXIT
 printf '%s\n' "$GRANT" > "$TMP"
 visudo -cf "$TMP" >/dev/null
-sudo install -m 0440 -o root -g wheel "$TMP" "$GRANT_FILE"
-sudo visudo -c >/dev/null
+# The system password dialog works with or without a terminal, unlike sudo's prompt.
+osascript -e "do shell script \"/usr/bin/install -m 0440 -o root -g wheel '$TMP' $GRANT_FILE && /usr/sbin/visudo -c\" with administrator privileges" >/dev/null
 
 # Drop the cached sudo password so this check proves the rule itself works.
 sudo -k
