@@ -47,3 +47,7 @@ Turn off **Launch at Login** first, then:
 ```sh
 ./uninstall.sh
 ```
+
+## License
+
+[MIT](LICENSE)
