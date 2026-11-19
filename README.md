@@ -27,16 +27,18 @@ Click the cup in the menu bar and flip the switch, then close the lid. A filled 
 
 Workaholic turns itself off when:
 
-- the battery drops to the **Battery Floor** while on battery (5–50%, default 20%)
-- the **Auto-off Timer** ends (never, 1, 2, 4 or 8 hours)
-- the Mac reaches a critical thermal state
-- you quit it
+- the battery drops to the **Battery Floor** (5–50%, default 20%) while on battery, or on a charger too weak to charge it
+- the **Auto-off Timer** ends (1, 2, 4 or 8 hours, or never; default 2 hours)
+- the Mac runs hot: a serious thermal state with the lid closed, or a critical one with it open
+- you quit it, or it is stopped with `kill`
 
-It always starts in the off state, so after a crash or force-quit, the next launch restores normal sleep.
+If the lid is closed when one of the first three happens, Workaholic also asks macOS to sleep. Clearing the flag alone is not enough: macOS only checks the lid at the moment it closes, and apps that block idle sleep would otherwise keep the closed Mac running.
+
+It always starts in the off state, so after a crash or force-quit, the next launch restores normal sleep. Until that launch the flag stays set, even across a restart, so keep **Launch at Login** on.
 
 ## How it works
 
-`pmset -a disablesleep 1` sets the kernel's `SleepDisabled` flag, the one setting that overrides lid-close sleep. Power assertions (`caffeinate`, Amphetamine's default mode) cannot. Workaholic reads the flag back from `pmset -g`, so the icon always shows the real state. You can check it yourself with `pmset -g | grep SleepDisabled`.
+`pmset -a disablesleep 1` sets the kernel's `SleepDisabled` flag, the one setting that overrides lid-close sleep. Power assertions (`caffeinate`, Amphetamine's default mode) cannot. Workaholic reads the flag back from `pmset -g`, so while it is on the icon shows the real state. You can check it yourself with `pmset -g | grep SleepDisabled`.
 
 A closed Mac has little airflow, so heavy sustained work in a bag runs hot.
 
