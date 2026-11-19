@@ -320,6 +320,9 @@ struct Panel: View {
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
+                // At regular size the five segments ask for 300pt on macOS 27, more than the panel's
+                // 258pt of content width, and the overflow pushes every row off the left edge.
+                .controlSize(.small)
             }
 
             VStack(alignment: .leading, spacing: 4) {
